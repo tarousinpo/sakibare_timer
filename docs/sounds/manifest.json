@@ -1,3 +1,9 @@
 {
-  "sounds": []
+  "sounds": [
+    "SE_000.mp3",
+    "SE_001.mp3",
+    "SE_003.mp3",
+    "SE_006.mp3",
+    "rez.mp3"
+  ]
 }
