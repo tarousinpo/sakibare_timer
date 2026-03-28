@@ -1,0 +1,302 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --card: #0f3460;
+    --accent: #e94560;
+    --accent2: #4ecca3;
+    --text: #eaeaea;
+    --text-muted: #9aa0b4;
+    --danger: #e94560;
+    --success: #4ecca3;
+    --radius: 12px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Header ===== */
+header {
+    background: var(--surface);
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    letter-spacing: 0.05em;
+    color: var(--text);
+}
+
+/* ===== Main layout ===== */
+main {
+    flex: 1;
+    padding: 1.5rem 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+#timers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ===== Timer Card ===== */
+.timer-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.2s;
+    position: relative;
+}
+
+.timer-card.ringing {
+    box-shadow: 0 0 0 3px var(--accent), var(--shadow);
+    animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+    to   { box-shadow: 0 0 0 6px var(--accent), var(--shadow); }
+}
+
+/* Header row: label + delete */
+.timer-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.timer-label {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--text-muted);
+    color: var(--text);
+    font-size: 1rem;
+    padding: 0.25rem 0.25rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.timer-label:focus {
+    border-bottom-color: var(--accent2);
+}
+
+/* ===== Display ===== */
+.timer-display {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: var(--accent2);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.timer-card.ringing .timer-display {
+    color: var(--accent);
+}
+
+/* ===== Inputs ===== */
+.timer-inputs {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.timer-inputs label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.timer-inputs span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.timer-inputs input[type="number"] {
+    width: 4.5rem;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--text-muted);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 1.4rem;
+    padding: 0.3rem 0.25rem;
+    appearance: textfield;
+    -moz-appearance: textfield;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.timer-inputs input[type="number"]::-webkit-inner-spin-button,
+.timer-inputs input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+.timer-inputs input[type="number"]:focus {
+    border-color: var(--accent2);
+}
+
+.timer-inputs input[type="number"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.separator {
+    font-size: 1.8rem;
+    line-height: 1;
+    align-self: flex-end;
+    padding-bottom: 0.35rem;
+    color: var(--text-muted);
+}
+
+/* ===== Controls ===== */
+.timer-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+/* ===== Status ===== */
+.timer-status {
+    min-height: 1.2em;
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.timer-card.ringing .timer-status {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    transition: opacity 0.15s, transform 0.1s;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-start {
+    background: var(--success);
+    color: #0f3460;
+}
+
+.btn-stop {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-reset {
+    background: var(--text-muted);
+    color: #fff;
+}
+
+.btn-delete {
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+.btn-delete:hover {
+    background: rgba(233,69,96,0.2);
+    color: var(--danger);
+}
+
+.btn-add {
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    letter-spacing: 0.03em;
+}
+
+.btn-add:hover {
+    opacity: 0.85;
+}
+
+/* ===== Add Timer Section ===== */
+.add-timer-wrap {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    main {
+        padding: 1rem 0.75rem 1.5rem;
+    }
+
+    #timers-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .timer-card {
+        padding: 1rem;
+    }
+
+    .timer-inputs input[type="number"] {
+        width: 3.8rem;
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}

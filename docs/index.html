@@ -1,17 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Web Timer</title>
+    <title>さきバレタイマー</title>
 </head>
 <body>
-    <h1>Web Timer</h1>
-    <div id="timer">00:00:00</div>
-    <button id="start">Start</button>
-    <button id="stop">Stop</button>
-    <button id="reset">Reset</button>
+    <header>
+        <h1>⏱ さきバレタイマー</h1>
+    </header>
+    <main>
+        <div id="timers-container"></div>
+        <div class="add-timer-wrap">
+            <button id="add-timer-btn" class="btn btn-add">＋ タイマーを追加</button>
+        </div>
+    </main>
+
+    <!-- Timer card template -->
+    <template id="timer-template">
+        <div class="timer-card" data-id="">
+            <div class="timer-header">
+                <input class="timer-label" type="text" placeholder="タイマー名" maxlength="30" aria-label="タイマー名">
+                <button class="btn btn-delete" aria-label="削除">✕</button>
+            </div>
+            <div class="timer-display" aria-live="polite">00:00</div>
+            <div class="timer-inputs">
+                <label>
+                    <span>分</span>
+                    <input class="input-minutes" type="number" min="0" max="999" value="0" inputmode="numeric" aria-label="分">
+                </label>
+                <span class="separator">:</span>
+                <label>
+                    <span>秒</span>
+                    <input class="input-seconds" type="number" min="0" max="59" value="0" inputmode="numeric" aria-label="秒">
+                </label>
+            </div>
+            <div class="timer-controls">
+                <button class="btn btn-start">Start</button>
+                <button class="btn btn-stop" disabled>Stop</button>
+                <button class="btn btn-reset">Reset</button>
+            </div>
+            <div class="timer-status"></div>
+        </div>
+    </template>
+
     <script src="app.js"></script>
 </body>
 </html>
