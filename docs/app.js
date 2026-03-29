@@ -62,6 +62,8 @@
             total: 0,
             running: false,
             audio: null,
+            startTime: null,
+            remainingAtStart: 0,
         };
         timers.set(id, state);
 
@@ -110,17 +112,15 @@
         }
 
         function tick() {
+            const elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            state.remaining = Math.max(0, state.remainingAtStart - elapsed);
+            updateDisplay(state.remaining);
             if (state.remaining <= 0) {
                 clearInterval(state.intervalId);
                 state.intervalId = null;
                 state.running = false;
-                state.remaining = 0;
-                updateDisplay(0);
                 startRinging();
-                return;
             }
-            state.remaining--;
-            updateDisplay(state.remaining);
         }
 
         // ---- Button handlers ----
@@ -145,6 +145,8 @@
             resetBtn.disabled = true;
 
             state.running = true;
+            state.startTime = Date.now();
+            state.remainingAtStart = state.remaining;
             updateDisplay(state.remaining);
             state.intervalId = setInterval(tick, 1000);
         });
